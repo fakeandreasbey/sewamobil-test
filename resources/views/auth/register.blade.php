@@ -5,7 +5,7 @@
    
         <div>
             <x-input-label for="name" :value="__('Nama')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" onkeypress="validateNama(event)" maxlength="50"/>
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
@@ -26,6 +26,7 @@
             <x-text-input id="alamat" class="block mt-1 w-full" type="text" name="alamat" :value="old('alamat')" required autofocus autocomplete="alamat" />
             <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
         </div>
+
 
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
@@ -69,6 +70,17 @@
 
 
 <script>
+        function validateNama(event) {
+            var key = event.key;
+
+            // Validasi hanya huruf (A-Z atau a-z) atau spasi
+            var isLetterOrSpace = /^[A-Za-z\s]+$/.test(key);
+
+            if (!isLetterOrSpace) {
+                event.preventDefault();
+            }
+        }
+
         function validateNoTelp(event) {
             var key = event.key;
             var isDigit = /\d/.test(key);
