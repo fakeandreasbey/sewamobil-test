@@ -10,6 +10,7 @@ Pass: 12345678
 database ada di folder 'database' dengan nama file 'sewa_mobil.sql'
 
 
+<br><br><br>
 
 
 
@@ -19,31 +20,30 @@ database ada di folder 'database' dengan nama file 'sewa_mobil.sql'
 
 
 
+composer require spatie/laravel-permission<br>
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"<br>
+php artisan migrate<br><br>
 
-composer require spatie/laravel-permission
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-php artisan migrate
+php artisan permission:create-role "member"<br>
+php artisan permission:create-role "admin"<br>
+php artisan permission:create-permission "mobil crud" //fitur CRUD data mobil<br>
+php artisan permission:create-permission "mobil kembali" //fitur pengembalian mobil<br><br>
 
-php artisan permission:create-role "member"
-php artisan permission:create-role "admin"
-php artisan permission:create-permission "mobil crud" //fitur CRUD data mobil
-php artisan permission:create-permission "mobil kembali" //fitur pengembalian mobil
-
-User.php (Models)
-use Spatie\Permission\Traits\HasRoles;
-use HasApiTokens, HasFactory, Notifiable, HasRoles;
-
-
-php artisan tinker
-$user = User::find(2); //Melihat user: admin@sewamobil.id
-$user->assignRole('admin'); //Set menjadi 'admin'
-$user = User::find(3); //Melihat user: andre@sewamobil.id
-$user->assignRole('member'); //Set menjadi 'member'
+User.php (Models)<br>
+use Spatie\Permission\Traits\HasRoles;<br>
+use HasApiTokens, HasFactory, Notifiable, HasRoles;<br><br>
 
 
-//routes-web.php
-use Spatie\Permission\Models\Role;
-$role = Role::find(2);
-$role->givePermissionTo('mobil crud','mobil kembali');
+php artisan tinker<br>
+$user = User::find(2); //Melihat user: admin@sewamobil.id<br>
+$user->assignRole('admin'); //Set menjadi 'admin'<br>
+$user = User::find(3); //Melihat user: andre@sewamobil.id<br>
+$user->assignRole('member'); //Set menjadi 'member'<br><br>
+
+
+//routes-web.php<br>
+use Spatie\Permission\Models\Role;<br>
+$role = Role::find(2);<br>
+$role->givePermissionTo('mobil crud','mobil kembali');<br><br>
 
 php artisan permission:show //Melihat permission dan roles
