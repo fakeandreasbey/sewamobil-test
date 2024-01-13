@@ -2,43 +2,37 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
+   
         <div>
             <x-input-label for="name" :value="__('Nama')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-                <!-- Name -->
         <div class="mt-4">
             <x-input-label for="name" :value="__('No. Telp')" />
-            <x-text-input id="no_telp" class="block mt-1 w-full" type="text" name="no_telp" :value="old('no_telp')" required autofocus autocomplete="no_telp" />
+            <x-text-input id="no_telp" class="block mt-1 w-full" type="text" name="no_telp" :value="old('no_telp')" required autofocus autocomplete="no_telp"  onkeypress="validateNoTelp(event)" maxlength="15"/>
             <x-input-error :messages="$errors->get('no_telp')" class="mt-2" />
         </div>
 
-                <!-- Name -->
         <div class="mt-4">        
             <x-input-label for="name" :value="__('No. SIM')" />
-            <x-text-input id="no_sim" class="block mt-1 w-full" type="text" name="no_sim" :value="old('no_sim')" required autofocus autocomplete="no_sim" />
+            <x-text-input id="no_sim" class="block mt-1 w-full" type="text" name="no_sim" :value="old('no_sim')" required autofocus autocomplete="no_sim"  onkeypress="validateNoSIM(event)" maxlength="20"/>
             <x-input-error :messages="$errors->get('no_sim')" class="mt-2" />
         </div>
 
-                <!-- Name -->
         <div class="mt-4">
             <x-input-label for="name" :value="__('Alamat')" />
             <x-text-input id="alamat" class="block mt-1 w-full" type="text" name="alamat" :value="old('alamat')" required autofocus autocomplete="alamat" />
             <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-
-        <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
@@ -72,3 +66,26 @@
         </div>
     </form>
 </x-guest-layout>
+
+
+<script>
+        function validateNoTelp(event) {
+            var key = event.key;
+            var isDigit = /\d/.test(key);
+
+            if (!isDigit) {
+                // Jangan izinkan input karakter selain angka
+                event.preventDefault();
+            }
+        }
+
+        function validateNoSIM(event) {
+            var key = event.key;
+            var isDigitOrDash = /[0-9-]/.test(key);
+
+            if (!isDigitOrDash) {
+                // Jangan izinkan input karakter selain angka dan '-'
+                event.preventDefault();
+            }
+        }
+</script>
